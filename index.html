@@ -125,6 +125,42 @@
   }
   @media (max-width:700px){.pager .per{margin-left:0;width:100%;justify-content:center}}
 
+  @media (max-width:700px){
+    .app{padding:20px 14px 44px}
+    h1{font-size:22px}
+    .bar{grid-template-columns:1fr 1fr;gap:8px}
+    .frame{border:0;background:none}
+    .scroll{overflow:visible}
+    table{min-width:0;table-layout:auto}
+    colgroup,thead{display:none}
+    table,tbody,tr,td{display:block;width:100%}
+    tbody tr{
+      background:var(--panel);border:1px solid var(--line-soft);border-radius:11px;
+      padding:13px 15px 11px;margin-bottom:10px;
+    }
+    tbody tr:hover td{background:none}
+    tbody td{
+      height:auto;padding:3px 0;border:0;text-align:right;white-space:normal;overflow:visible;
+      display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-size:13.5px;
+    }
+    tbody td::before{
+      content:attr(data-l);color:var(--dim);font-family:var(--disp);font-weight:600;
+      font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;flex:none;
+    }
+    tbody td.vuota{display:none}
+    tbody td.name{display:block;font-size:16px;padding:0 0 1px}
+    tbody td.prov{display:block;font-size:12.5px;padding:0 0 8px;border-bottom:1px solid var(--line-soft);margin-bottom:7px}
+    tbody td.name::before,tbody td.prov::before{display:none}
+    tbody td.name.vuota,tbody td.prov.vuota{display:block}
+    tbody td[data-l="RTP"]{font-size:17px;padding-bottom:5px}
+    .pager{padding:6px 0 0;border:0}
+    .pager .info{min-width:0;font-size:12px}
+    .pager button{padding:9px 13px;font-size:11.5px}
+    .pager .per{width:100%;justify-content:center;margin:4px 0 0}
+    .meta{margin-bottom:12px}
+    .foot{margin-top:14px}
+  }
+
   .loader{border:1px dashed var(--line);border-radius:12px;padding:34px 24px;text-align:center;background:var(--sunk);color:var(--muted);margin-top:22px}
   .loader h2{font-family:var(--disp);font-size:15px;margin:0 0 6px;color:var(--text)}
   .pick{display:inline-block;margin-top:16px;background:var(--brass);color:#1B1405;border:0;border-radius:8px;font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:11px 20px;cursor:pointer}
@@ -413,7 +449,8 @@
     else if(c.k === "buy")  t = r.buy ? '<span class="pill">Sì</span>' : '<span class="dash">—</span>';
     else if(c.k === "vol")  t = r.vol ? '<span class="' + (VOL_CLS[norm(r.vol)] || "") + '">' + r.vol + '</span>' : '<span class="dash">—</span>';
     else t = r[c.k] || '<span class="dash">—</span>';
-    return '<td class="' + c.cls + '">' + t + "</td>";
+    var vuota = t.indexOf('class="dash"') >= 0;
+    return '<td class="' + c.cls + (vuota ? " vuota" : "") + '" data-l="' + c.label + '">' + t + "</td>";
   }
   function render(){
     var pagine = Math.max(1, Math.ceil(VIEW.length / PER));
